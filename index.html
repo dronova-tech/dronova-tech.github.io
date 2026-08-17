@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRONOVA TECH // Precision Software Engineering</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Mono:wght@400;700&display=swap');
+
+        :root {
+            --black: #000000;
+            --white: #FFFFFF;
+            --gray-1: #0a0a0a;
+            --gray-2: #141414;
+            --gray-3: #333333;
+            --gray-4: #666666;
+            --gray-5: #999999;
+            --gray-6: #cccccc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--black);
+            color: var(--white);
+            font-family: 'Space Mono', monospace;
+            overflow-x: hidden;
+            line-height: 1.6;
+            cursor: crosshair;
+        }
+
+        ::selection {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        /* ═══════ SCROLLBAR ═══════ */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--black); border-left: 1px solid var(--gray-3); }
+        ::-webkit-scrollbar-thumb { background: var(--white); }
+
+        /* ═══════ CRT SCANLINES + VIGNETTE ═══════ */
+        .crt-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9998;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(255,255,255,0.015) 0px,
+                rgba(255,255,255,0.015) 1px,
+                transparent 1px,
+                transparent 3px
+            );
+        }
+
+        .vignette {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9997;
+            background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.5) 100%);
+        }
+
+        /* ═══════ BOOT LOADER ═══════ */
+        #boot-loader {
+            position: fixed;
+            inset: 0;
+            background: var(--black);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 40px clamp(20px, 10vw, 140px);
+            font-size: clamp(0.65rem, 1.5vw, 0.85rem);
+        }
+
+        .boot-line {
+            opacity: 0;
+            margin-bottom: 6px;
+            color: var(--gray-6);
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .boot-line .ok { color: var(--white); font-weight: 700; }
+
+        #boot-logo {
+            margin-bottom: 30px;
+            opacity: 0;
+            width: 70px;
+        }
+
+        /* ═══════ CUSTOM CURSOR ═══════ */
+        .cursor-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: var(--white);
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-ring {
+            position: fixed;
+            width: 32px;
+            height: 32px;
+            border: 1px solid var(--white);
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, border-color 0.3s;
+            mix-blend-mode: difference;
+        }
+
+        body.cursor-hover .cursor-ring {
+            width: 56px;
+            height: 56px;
+        }
+
+        @media (max-width: 768px) {
+            .cursor-dot, .cursor-ring { display: none; }
+            body { cursor: auto; }
+        }
+
+        /* ═══════ NAVIGATION ═══════ */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            height: 72px;
+            border-bottom: 1px solid var(--gray-3);
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(12px);
+            transition: border-color 0.3s;
+        }
+
+        nav.scrolled { border-bottom-color: var(--white); }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        .nav-logo { width: 38px; height: 42px; display: block; }
+
+        .nav-text {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links a {
+            color: var(--gray-5);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 10px 16px;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .nav-links a:not(.btn)::before {
+            content: '[';
+            opacity: 0;
+            margin-right: 2px;
+            transition: opacity 0.2s;
+        }
+
+        .nav-links a:not(.btn)::after {
+            content: ']';
+            opacity: 0;
+            margin-left: 2px;
+            transition: opacity 0.2s;
+        }
+
+        .nav-links a:not(.btn):hover {
+            color: var(--white);
+        }
+
+        .nav-links a:not(.btn):hover::before,
+        .nav-links a:not(.btn):hover::after {
+            opacity: 1;
+        }
+
+        /* ═══════ BUTTONS ═══════ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            border: 1px solid var(--white);
+            background: transparent;
+            color: var(--white) !important;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: color 0.3s;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--white);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+
+        .btn:hover { color: var(--black) !important; }
+        .btn:hover::before { transform: scaleX(1); }
+
+        .btn-solid {
+            background: var(--white);
+            color: var(--black) !important;
+        }
+
+        .btn-solid::before { background: var(--black); }
+        .btn-solid:hover { color: var(--white) !important; }
+
+        /* ═══════ HERO ═══════ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 40px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-grid-bg {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+            animation: grid-drift 25s linear infinite;
+        }
+
+        @keyframes grid-drift {
+            from { background-position: 0 0, 0 0; }
+            to { background-position: 60px 60px, 60px 60px; }
+        }
+
+        .hero-logo {
+            width: clamp(90px, 15vw, 140px);
+            margin-bottom: 48px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 22px;
+            border: 1px solid var(--gray-3);
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gray-6);
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--white);
+            animation: blink 1.2s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .hero h1 {
+            font-family: 'Press Start 2P', monospace;
+            font-size: clamp(1.8rem, 7vw, 4.2rem);
+            line-height: 1.25;
+            letter-spacing: 2px;
+            margin-bottom: 28px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* GLITCH EFFECT */
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            inset: 0;
+            background: var(--black);
+            clip-path: inset(0 0 0 0);
+        }
+
+        .glitch::before {
+            animation: glitch-1 3.5s infinite steps(1);
+            text-shadow: -2px 0 var(--gray-5);
+        }
+
+        .glitch::after {
+            animation: glitch-2 3.5s infinite steps(1);
+            text-shadow: 2px 0 var(--gray-4);
+        }
+
+        @keyframes glitch-1 {
+            0%, 92%, 100% { clip-path: inset(100% 0 0 0); transform: translate(0); }
+            93% { clip-path: inset(10% 0 60% 0); transform: translate(-3px, 2px); }
+            95% { clip-path: inset(50% 0 20% 0); transform: translate(3px, -2px); }
+            97% { clip-path: inset(80% 0 5% 0); transform: translate(-2px, 1px); }
+        }
+
+        @keyframes glitch-2 {
+            0%, 91%, 100% { clip-path: inset(100% 0 0 0); transform: translate(0); }
+            92% { clip-path: inset(60% 0 10% 0); transform: translate(3px, 1px); }
+            94% { clip-path: inset(20% 0 55% 0); transform: translate(-3px, -1px); }
+            96% { clip-path: inset(5% 0 85% 0); transform: translate(2px, 2px); }
+        }
+
+        .hero-sub {
+            font-size: clamp(0.85rem, 2vw, 1.05rem);
+            color: var(--gray-5);
+            max-width: 640px;
+            margin: 0 auto 52px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-sub .typed-cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.1em;
+            background: var(--white);
+            vertical-align: text-bottom;
+            animation: blink 0.8s step-end infinite;
+            margin-left: 3px;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 18px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-coords {
+            position: absolute;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            color: var(--gray-4);
+            text-transform: uppercase;
+        }
+
+        .coord-tl { top: 100px; left: 40px; }
+        .coord-tr { top: 100px; right: 40px; text-align: right; }
+        .coord-bl { bottom: 40px; left: 40px; }
+        .coord-br { bottom: 40px; right: 40px; text-align: right; }
+
+        /* ═══════ MARQUEE TICKER ═══════ */
+        .marquee {
+            border-top: 1px solid var(--white);
+            border-bottom: 1px solid var(--white);
+            overflow: hidden;
+            padding: 18px 0;
+            background: var(--black);
+            position: relative;
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 60px;
+            white-space: nowrap;
+            animation: marquee-scroll 28s linear infinite;
+            width: max-content;
+        }
+
+        .marquee:hover .marquee-track { animation-play-state: paused; }
+
+        .marquee-item {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .marquee-item::after {
+            content: '◆';
+            color: var(--gray-4);
+            font-size: 0.6rem;
+        }
+
+        @keyframes marquee-scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* ═══════ SECTIONS ═══════ */
+        section {
+            padding: 120px 40px;
+            position: relative;
+        }
+
+        .section-inner { max-width: 1280px; margin: 0 auto; }
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gray-5);
+            margin-bottom: 24px;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: var(--white);
+        }
+
+        .section-title {
+            font-family: 'Press Start 2P', monospace;
+            font-size: clamp(1.4rem, 4.5vw, 2.6rem);
+            line-height: 1.35;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .section-desc {
+            font-size: 0.95rem;
+            color: var(--gray-5);
+            max-width: 560px;
+            margin-bottom: 70px;
+        }
+
+        /* ═══════ ABOUT / TERMINAL ═══════ */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 70px;
+            align-items: start;
+        }
+
+        .terminal {
+            border: 1px solid var(--white);
+            background: var(--gray-1);
+            font-size: 0.8rem;
+        }
+
+        .terminal-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 18px;
+            border-bottom: 1px solid var(--gray-3);
+            background: var(--black);
+        }
+
+        .terminal-title {
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            color: var(--gray-5);
+            text-transform: uppercase;
+        }
+
+        .terminal-dots { display: flex; gap: 8px; }
+
+        .terminal-dots span {
+            width: 10px;
+            height: 10px;
+            border: 1px solid var(--white);
+        }
+
+        .terminal-dots span:first-child { background: var(--white); }
+
+        .terminal-body { padding: 26px 22px; line-height: 2.1; }
+
+        .t-line { display: block; }
+        .t-prompt { color: var(--white); font-weight: 700; }
+        .t-cmd { color: var(--gray-6); }
+        .t-out { color: var(--gray-5); padding-left: 18px; }
+        .t-key { color: var(--white); }
+
+        .about-text h3 {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 1.15rem;
+            line-height: 1.6;
+            margin-bottom: 26px;
+        }
+
+        .about-text > p {
+            color: var(--gray-5);
+            font-size: 0.92rem;
+            margin-bottom: 18px;
+        }
+
+        .principles { margin-top: 40px; display: grid; gap: 0; border: 1px solid var(--gray-3); }
+
+        .principle {
+            display: flex;
+            gap: 20px;
+            padding: 22px 24px;
+            border-bottom: 1px solid var(--gray-3);
+            transition: all 0.25s;
+            align-items: baseline;
+        }
+
+        .principle:last-child { border-bottom: none; }
+
+        .principle:hover { background: var(--white); }
+        .principle:hover .p-num, .principle:hover .p-name, .principle:hover .p-desc { color: var(--black); }
+
+        .p-num {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.7rem;
+            color: var(--gray-4);
+            min-width: 34px;
+        }
+
+        .p-name {
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            min-width: 140px;
+        }
+
+        .p-desc { color: var(--gray-5); font-size: 0.82rem; }
+
+        /* ═══════ PRODUCTS ═══════ */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+        }
+
+        .product-card {
+            border: 1px solid var(--gray-3);
+            background: var(--gray-1);
+            padding: 36px 30px 30px;
+            position: relative;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* pixel corner brackets */
+        .product-card::before,
+        .product-card::after {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border: 2px solid var(--white);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .product-card::before {
+            top: 8px; left: 8px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .product-card::after {
+            bottom: 8px; right: 8px;
+            border-left: none;
+            border-top: none;
+        }
+
+        .product-card:hover {
+            border-color: var(--white);
+            background: var(--gray-2);
+            transform: translateY(-6px);
+        }
+
+        .product-card:hover::before,
+        .product-card:hover::after { opacity: 1; }
+
+        .product-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+        }
+
+        .product-index {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.65rem;
+            color: var(--gray-4);
+        }
+
+        .product-status {
+            font-size: 0.6rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 5px 10px;
+            border: 1px solid var(--gray-3);
+            color: var(--gray-5);
+        }
+
+        .product-status.live {
+            border-color: var(--white);
+            color: var(--white);
+        }
+
+        .product-status.live::before {
+            content: '● ';
+            animation: blink 1.4s step-end infinite;
+        }
+
+        .product-icon {
+            font-size: 2.4rem;
+            margin-bottom: 18px;
+            filter: grayscale(1) contrast(1.2);
+        }
+
+        .product-card h3 {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+            line-height: 1.5;
+        }
+
+        .product-card > p {
+            font-size: 0.85rem;
+            color: var(--gray-5);
+            flex-grow: 1;
+            margin-bottom: 26px;
+        }
+
+        .product-foot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-3);
+        }
+
+        .product-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        .tag {
+            font-size: 0.6rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--gray-5);
+        }
+
+        .tag::before { content: '#'; color: var(--gray-4); }
+
+        .product-link {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            white-space: nowrap;
+            transition: letter-spacing 0.25s;
+        }
+
+        .product-link:hover { letter-spacing: 3px; }
+
+        /* ═══════ STATS ═══════ */
+        .stats-section {
+            border-top: 1px solid var(--white);
+            border-bottom: 1px solid var(--white);
+            padding: 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .stat {
+            padding: 70px 30px;
+            text-align: center;
+            border-right: 1px solid var(--gray-3);
+            transition: background 0.3s;
+            position: relative;
+        }
+
+        .stat:last-child { border-right: none; }
+
+        .stat:hover { background: var(--gray-1); }
+
+        .stat-number {
+            font-family: 'Press Start 2P', monospace;
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--gray-5);
+        }
+
+        /* ═══════ ROADMAP ═══════ */
+        .roadmap { display: grid; gap: 0; border-left: 1px solid var(--gray-3); }
+
+        .road-item {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 40px;
+            padding: 36px 0 36px 40px;
+            position: relative;
+            transition: all 0.25s;
+        }
+
+        .road-item::before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 46px;
+            width: 9px;
+            height: 9px;
+            background: var(--black);
+            border: 1px solid var(--white);
+            transition: background 0.25s;
+        }
+
+        .road-item:hover::before { background: var(--white); }
+
+        .road-year {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.85rem;
+            color: var(--gray-5);
+        }
+
+        .road-item:hover .road-year { color: var(--white); }
+
+        .road-content h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .road-content p { font-size: 0.87rem; color: var(--gray-5); max-width: 560px; }
+
+        /* ═══════ CTA ═══════ */
+        .cta-section { padding: 140px 40px; }
+
+        .cta-box {
+            max-width: 900px;
+            margin: 0 auto;
+            border: 1px solid var(--white);
+            padding: 80px 50px;
+            text-align: center;
+            position: relative;
+            background: var(--gray-1);
+        }
+
+        .cta-box::before, .cta-box::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+        }
+
+        .cta-box::before {
+            top: -1px; left: -1px;
+            border-top: 4px solid var(--white);
+            border-left: 4px solid var(--white);
+        }
+
+        .cta-box::after {
+            bottom: -1px; right: -1px;
+            border-bottom: 4px solid var(--white);
+            border-right: 4px solid var(--white);
+        }
+
+        .cta-box h2 {
+            font-family: 'Press Start 2P', monospace;
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .cta-box p {
+            color: var(--gray-5);
+            font-size: 0.95rem;
+            margin-bottom: 44px;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+
+        /* ═══════ FOOTER ═══════ */
+        footer {
+            border-top: 1px solid var(--white);
+            padding: 80px 40px 0;
+            background: var(--black);
+        }
+
+        .footer-inner { max-width: 1280px; margin: 0 auto; }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1.4fr repeat(3, 1fr);
+            gap: 50px;
+            padding-bottom: 70px;
+        }
+
+        .footer-brand-block { max-width: 300px; }
+
+        .footer-logo { width: 74px; margin-bottom: 24px; }
+
+        .footer-brand-name {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        .footer-tagline { font-size: 0.82rem; color: var(--gray-5); }
+
+        .footer-col h4 {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            color: var(--white);
+        }
+
+        .footer-col a {
+            display: block;
+            color: var(--gray-5);
+            text-decoration: none;
+            font-size: 0.83rem;
+            margin-bottom: 13px;
+            transition: all 0.2s;
+        }
+
+        .footer-col a:hover {
+            color: var(--white);
+            padding-left: 8px;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 28px 0;
+            border-top: 1px solid var(--gray-3);
+            font-size: 0.72rem;
+            color: var(--gray-4);
+            letter-spacing: 1px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-sys { display: flex; align-items: center; gap: 10px; }
+
+        /* ═══════ BACK TO TOP ═══════ */
+        #back-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            border: 1px solid var(--white);
+            background: var(--black);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s;
+            z-index: 900;
+            font-size: 1.1rem;
+        }
+
+        #back-top.visible { opacity: 1; pointer-events: auto; }
+        #back-top:hover { background: var(--white); color: var(--black); }
+
+        /* ═══════ REVEAL ANIM ═══════ */
+        .reveal { opacity: 0; transform: translateY(40px); }
+
+        /* ═══════ RESPONSIVE ═══════ */
+        @media (max-width: 1024px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .stat:nth-child(2) { border-right: none; }
+            .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--gray-3); }
+            .footer-top { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 0 20px; height: 64px; }
+            .nav-text { display: none; }
+            .nav-links a:not(.btn) { display: none; }
+            .btn { padding: 11px 22px; font-size: 0.68rem; }
+            section { padding: 80px 20px; }
+            .hero { padding: 100px 20px 60px; }
+            .hero-coords { display: none; }
+            .about-grid { grid-template-columns: 1fr; gap: 50px; }
+            .road-item { grid-template-columns: 1fr; gap: 10px; padding-left: 28px; }
+            .cta-box { padding: 60px 26px; }
+            .footer-top { grid-template-columns: 1fr; gap: 40px; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .stat { border-right: none; border-bottom: 1px solid var(--gray-3); }
+            .stat:last-child { border-bottom: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CRT EFFECTS -->
+    <div class="crt-overlay"></div>
+    <div class="vignette"></div>
+
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <!-- ═══════ BOOT LOADER ═══════ -->
+    <div id="boot-loader">
+        <svg id="boot-logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+            <rect x="128" y="108" width="284" height="340" fill="#FFFFFF"/>
+            <rect x="100" y="64" width="284" height="340" fill="#000000" stroke="#FFFFFF" stroke-width="14"/>
+            <text x="130" y="200" font-family="'Press Start 2P', monospace" font-size="82" fill="#FFFFFF">DT</text>
+        </svg>
+        <div class="boot-line">DRONOVA_OS v4.2.1 — initializing kernel...</div>
+        <div class="boot-line">> mounting /neural/core .......... <span class="ok">[OK]</span></div>
+        <div class="boot-line">> loading pixel_engine.sys ....... <span class="ok">[OK]</span></div>
+        <div class="boot-line">> verifying integrity ............ <span class="ok">[OK]</span></div>
+        <div class="boot-line">> establishing uplink ............ <span class="ok">[OK]</span></div>
+        <div class="boot-line">> rendering interface ............ <span class="ok">[OK]</span></div>
+        <div class="boot-line" style="margin-top:14px;"><span class="ok">SYSTEM READY. WELCOME TO DRONOVA TECH.</span></div>
+    </div>
+
+    <!-- ═══════ NAVIGATION ═══════ -->
+    <nav id="navbar">
+        <a href="#" class="nav-brand">
+            <svg class="nav-logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                <rect x="128" y="108" width="284" height="340" fill="#FFFFFF"/>
+                <rect x="100" y="64" width="284" height="340" fill="#000000" stroke="#FFFFFF" stroke-width="14"/>
+                <text x="130" y="200" font-family="'Press Start 2P', monospace" font-size="82" fill="#FFFFFF">DT</text>
+            </svg>
+            <span class="nav-text">DRONOVA TECH</span>
+        </a>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#products">Products</a>
+            <a href="#roadmap">Roadmap</a>
+            <a href="mailto:dronova.tech@gmail.com">Contact</a>
+            <a href="#products" class="btn">Deploy</a>
+        </div>
+    </nav>
+
+    <!-- ═══════ HERO ═══════ -->
+    <section class="hero">
+        <div class="hero-grid-bg"></div>
+
+        <div class="hero-coords coord-tl">LAT 48.1351 // LON 11.5820</div>
+        <div class="hero-coords coord-tr">BUILD 2026.07<br>STABLE</div>
+        <div class="hero-coords coord-bl">© DRONOVA TECH</div>
+        <div class="hero-coords coord-br">SCROLL ▼</div>
+
+        <svg class="hero-logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+            <rect x="128" y="108" width="284" height="340" fill="#FFFFFF"/>
+            <rect x="100" y="64" width="284" height="340" fill="#000000" stroke="#FFFFFF" stroke-width="14"/>
+            <text x="130" y="200" font-family="'Press Start 2P', monospace" font-size="82" fill="#FFFFFF">DT</text>
+        </svg>
+
+        <div class="hero-status">
+            <span class="status-dot"></span>
+            <span>All systems operational</span>
+        </div>
+
+        <h1><span class="glitch" data-text="DRONOVA">DRONOVA</span><br><span class="glitch" data-text="TECH">TECH</span></h1>
+
+        <p class="hero-sub"><span id="typed-text"></span><span class="typed-cursor"></span></p>
+
+        <div class="hero-cta">
+            <a href="#products" class="btn btn-solid">Explore Products</a>
+            <a href="#about" class="btn">Our Mission</a>
+        </div>
+    </section>
+
+    <!-- ═══════ MARQUEE ═══════ -->
+    <div class="marquee">
+        <div class="marquee-track">
+            <span class="marquee-item">PRECISION ENGINEERING</span>
+            <span class="marquee-item">PRIVACY FIRST</span>
+            <span class="marquee-item">ZERO TRACKING</span>
+            <span class="marquee-item">PIXEL PERFECT</span>
+            <span class="marquee-item">BUILT TO LAST</span>
+            <span class="marquee-item">PRECISION ENGINEERING</span>
+            <span class="marquee-item">PRIVACY FIRST</span>
+            <span class="marquee-item">ZERO TRACKING</span>
+            <span class="marquee-item">PIXEL PERFECT</span>
+            <span class="marquee-item">BUILT TO LAST</span>
+        </div>
+    </div>
+
+    <!-- ═══════ ABOUT ═══════ -->
+    <section id="about">
+        <div class="section-inner">
+            <div class="section-label">01 // Who We Are</div>
+            <h2 class="section-title">The Studio</h2>
+            <p class="section-desc">An independent software studio crafting focused, privacy-respecting applications with obsessive attention to detail.</p>
+
+            <div class="about-grid reveal">
+                <div class="terminal">
+                    <div class="terminal-bar">
+                        <div class="terminal-dots"><span></span><span></span><span></span></div>
+                        <div class="terminal-title">dronova@core: ~/manifest</div>
+                    </div>
+                    <div class="terminal-body">
+                        <span class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">cat manifest.txt</span></span>
+                        <span class="t-line t-out"><span class="t-key">FOUNDED:</span> to build software worth keeping</span>
+                        <span class="t-line t-out"><span class="t-key">MODEL:</span> one brand, many products</span>
+                        <span class="t-line t-out"><span class="t-key">DATA_POLICY:</span> on-device, always</span>
+                        <span class="t-line t-out"><span class="t-key">ADS:</span> respectful, never invasive</span>
+                        <span class="t-line t-out"><span class="t-key">DESIGN:</span> monochrome. pixel. pure.</span>
+                        <span class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">status --check</span></span>
+                        <span class="t-line t-out">→ all systems nominal <span class="t-key">■</span></span>
+                        <span class="t-line"><span class="t-prompt">$</span> <span class="t-cmd t-blink">_</span></span>
+                    </div>
+                </div>
+
+                <div class="about-text">
+                    <h3>Software with a point of view.</h3>
+                    <p>Dronova Tech is a product studio built on a simple belief: great software should be fast, honest, and beautiful — without harvesting your data or fighting for your attention.</p>
+                    <p>Every application under the DT mark is engineered end-to-end with the same monochrome discipline you see here. No bloat. No dark patterns. Just tools that work.</p>
+
+                    <div class="principles">
+                        <div class="principle">
+                            <span class="p-num">01</span>
+                            <span class="p-name">Performance</span>
+                            <span class="p-desc">Native speed, minimal footprint</span>
+                        </div>
+                        <div class="principle">
+                            <span class="p-num">02</span>
+                            <span class="p-name">Privacy</span>
+                            <span class="p-desc">Your data never leaves your device</span>
+                        </div>
+                        <div class="principle">
+                            <span class="p-num">03</span>
+                            <span class="p-name">Craft</span>
+                            <span class="p-desc">Pixel-level attention to detail</span>
+                        </div>
+                        <div class="principle">
+                            <span class="p-num">04</span>
+                            <span class="p-name">Longevity</span>
+                            <span class="p-desc">Built to last, supported for years</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ PRODUCTS ═══════ -->
+    <section id="products" style="border-top: 1px solid var(--gray-3);">
+        <div class="section-inner">
+            <div class="section-label">02 // The Lineup</div>
+            <h2 class="section-title">Products</h2>
+            <p class="section-desc">A growing ecosystem of focused applications. One live today — more launching soon.</p>
+
+            <div class="products-grid">
+                <div class="product-card reveal">
+                    <div class="product-head">
+                        <span class="product-index">PRD_001</span>
+                        <span class="product-status live">Live</span>
+                    </div>
+                    <div class="product-icon">🧩</div>
+                    <h3>Sudoku Master</h3>
+                    <p>A neural logic engine for serious solvers. Advanced technique detection — X-Wing, Swordfish, Jellyfish — with a distraction-free tablet-first interface.</p>
+                    <div class="product-foot">
+                        <div class="product-tags">
+                            <span class="tag">android</span>
+                            <span class="tag">puzzle</span>
+                        </div>
+                        <a href="https://play.google.com/store/apps/details?id=com.neuralslate.sudokumaster" class="product-link" target="_blank" rel="noopener">Install →</a>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-head">
+                        <span class="product-index">PRD_002</span>
+                        <span class="product-status">In Dev</span>
+                    </div>
+                    <div class="product-icon">🧠</div>
+                    <h3>NeuralSpace</h3>
+                    <p>Cognitive training that adapts to you. Track focus, memory, and reasoning across sessions with clean on-device analytics.</p>
+                    <div class="product-foot">
+                        <div class="product-tags">
+                            <span class="tag">training</span>
+                            <span class="tag">mobile</span>
+                        </div>
+                        <a href="mailto:dronova.tech@gmail.com?subject=NeuralSpace%20Waitlist" class="product-link">Notify Me →</a>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-head">
+                        <span class="product-index">PRD_003</span>
+                        <span class="product-status">In Dev</span>
+                    </div>
+                    <div class="product-icon">⚙️</div>
+                    <h3>CodeForge</h3>
+                    <p>A developer toolkit for rapid prototyping. Snippets, scaffolds, and AI-assisted generation in a single portable workspace.</p>
+                    <div class="product-foot">
+                        <div class="product-tags">
+                            <span class="tag">devtools</span>
+                            <span class="tag">desktop</span>
+                        </div>
+                        <a href="mailto:dronova.tech@gmail.com?subject=CodeForge%20Waitlist" class="product-link">Notify Me →</a>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-head">
+                        <span class="product-index">PRD_004</span>
+                        <span class="product-status">Planned</span>
+                    </div>
+                    <div class="product-icon">🔄</div>
+                    <h3>DataSync</h3>
+                    <p>Encrypted synchronization for your files and settings across devices — end-to-end, zero-knowledge, fully yours.</p>
+                    <div class="product-foot">
+                        <div class="product-tags">
+                            <span class="tag">sync</span>
+                            <span class="tag">security</span>
+                        </div>
+                        <a href="mailto:dronova.tech@gmail.com?subject=DataSync%20Waitlist" class="product-link">Notify Me →</a>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-head">
+                        <span class="product-index">PRD_005</span>
+                        <span class="product-status">Planned</span>
+                    </div>
+                    <div class="product-icon">📊</div>
+                    <h3>Apex Analytics</h3>
+                    <p>Personal analytics without surveillance. Visualize your habits, finances, and productivity — all computed locally.</p>
+                    <div class="product-foot">
+                        <div class="product-tags">
+                            <span class="tag">analytics</span>
+                            <span class="tag">local-first</span>
+                        </div>
+                        <a href="mailto:dronova.tech@gmail.com?subject=Apex%20Waitlist" class="product-link">Notify Me →</a>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-head">
+                        <span class="product-index">PRD_006</span>
+                        <span class="product-status">Planned</span>
+                    </div>
+                    <div class="product-icon">🛡️</div>
+                    <h3>Guardian Suite</h3>
+                    <p>Personal security toolkit — permission auditing, tracker detection, and privacy hardening for everyday devices.</p>
+                    <div class="product-foot">
+                        <div class="product-tags">
+                            <span class="tag">security</span>
+                            <span class="tag">privacy</span>
+                        </div>
+                        <a href="mailto:dronova.tech@gmail.com?subject=Guardian%20Waitlist" class="product-link">Notify Me →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ STATS ═══════ -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat">
+                <span class="stat-number" data-count="50000" data-suffix="+">0</span>
+                <span class="stat-label">Downloads</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number" data-count="6">0</span>
+                <span class="stat-label">Products in Pipeline</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number" data-count="100" data-suffix="%">0</span>
+                <span class="stat-label">On-Device Processing</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number" data-count="0">0</span>
+                <span class="stat-label">Trackers. Ever.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ ROADMAP ═══════ -->
+    <section id="roadmap">
+        <div class="section-inner">
+            <div class="section-label">03 // Trajectory</div>
+            <h2 class="section-title">Roadmap</h2>
+            <p class="section-desc">Where the DT mark is heading. Shipped deliberately, not rushed.</p>
+
+            <div class="roadmap reveal">
+                <div class="road-item">
+                    <span class="road-year">2026 Q1</span>
+                    <div class="road-content">
+                        <h4>Sudoku Master — Launch</h4>
+                        <p>First product ships on Google Play. Tablet-optimized neural logic engine goes live worldwide.</p>
+                    </div>
+                </div>
+                <div class="road-item">
+                    <span class="road-year">2026 Q3</span>
+                    <div class="road-content">
+                        <h4>Sudoku Master — Major Update</h4>
+                        <p>Daily challenges, advanced statistics, and refined solver hints based on community feedback.</p>
+                    </div>
+                </div>
+                <div class="road-item">
+                    <span class="road-year">2026 Q4</span>
+                    <div class="road-content">
+                        <h4>NeuralSpace — Beta</h4>
+                        <p>Closed beta of the cognitive training platform opens to early supporters via waitlist.</p>
+                    </div>
+                </div>
+                <div class="road-item">
+                    <span class="road-year">2027</span>
+                    <div class="road-content">
+                        <h4>Ecosystem Expansion</h4>
+                        <p>CodeForge, DataSync and the wider DT toolchain enter active development.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ CTA ═══════ -->
+    <section class="cta-section" style="border-top: 1px solid var(--gray-3);">
+        <div class="cta-box reveal">
+            <h2>Join the Network</h2>
+            <p>Get early access to new releases, betas, and behind-the-scenes engineering notes. No spam — signal only.</p>
+            <div class="cta-buttons">
+                <a href="mailto:dronova.tech@gmail.com?subject=Early%20Access" class="btn btn-solid">Request Access</a>
+                <a href="https://play.google.com/store/apps/details?id=com.neuralslate.sudokumaster" class="btn" target="_blank" rel="noopener">Get Sudoku Master</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ FOOTER ═══════ -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand-block">
+                    <svg class="footer-logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="128" y="108" width="284" height="340" fill="#FFFFFF"/>
+                        <rect x="100" y="64" width="284" height="340" fill="#000000" stroke="#FFFFFF" stroke-width="14"/>
+                        <text x="130" y="200" font-family="'Press Start 2P', monospace" font-size="82" fill="#FFFFFF">DT</text>
+                    </svg>
+                    <div class="footer-brand-name">DRONOVA TECH</div>
+                    <p class="footer-tagline">Independent software studio. Monochrome by design, private by default.</p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Products</h4>
+                    <a href="https://play.google.com/store/apps/details?id=com.neuralslate.sudokumaster" target="_blank" rel="noopener">Sudoku Master</a>
+                    <a href="#products">NeuralSpace</a>
+                    <a href="#products">CodeForge</a>
+                    <a href="#products">DataSync</a>
+                    <a href="#products">Full Lineup</a>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <a href="#about">About</a>
+                    <a href="#roadmap">Roadmap</a>
+                    <a href="mailto:dronova.tech@gmail.com?subject=Press">Press</a>
+                    <a href="mailto:dronova.tech@gmail.com?subject=Partnership">Partnerships</a>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Connect</h4>
+                    <a href="mailto:dronova.tech@gmail.com">dronova.tech@gmail.com</a>
+                    <a href="mailto:dronova.tech@gmail.com?subject=Support">Support</a>
+                    <a href="mailto:dronova.tech@gmail.com?subject=Feedback">Feedback</a>
+                    <a href="privacy_policy.html">Privacy Policy</a>
+                    <a href="terms_and_conditions.html">Terms</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>© 2026 DRONOVA TECH — ALL RIGHTS RESERVED</span>
+                <span class="footer-sys"><span class="status-dot"></span> SYS.STATUS: OPERATIONAL</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BACK TO TOP -->
+    <button id="back-top" aria-label="Back to top">▲</button>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        /* ═══════ BOOT SEQUENCE ═══════ */
+        const bootLines = document.querySelectorAll('.boot-line');
+        const bootLoader = document.getElementById('boot-loader');
+
+        const bootTL = gsap.timeline({
+            onComplete: () => {
+                gsap.to(bootLoader, {
+                    duration: 0.5,
+                    opacity: 0,
+                    onComplete: () => {
+                        bootLoader.style.display = 'none';
+                        startHero();
+                    }
+                });
+            }
+        });
+
+        bootTL.to('#boot-logo', { duration: 0.4, opacity: 1 });
+        bootLines.forEach((line) => {
+            bootTL.to(line, { duration: 0.12, opacity: 1 }, '+=0.14');
+        });
+        bootTL.to({}, { duration: 0.6 });
+
+        /* ═══════ HERO ENTRANCE + TYPING ═══════ */
+        const typedPhrases = [
+            'Building focused software under one mark.',
+            'Privacy-first. Pixel-perfect. Uncompromising.',
+            'One studio. Many products. Zero trackers.'
+        ];
+
+        function startHero() {
+            gsap.timeline()
+                .from('.hero-logo', { duration: 0.8, scale: 0.6, opacity: 0, ease: 'back.out(1.6)' })
+                .from('.hero-status', { duration: 0.5, y: 16, opacity: 0 }, '-=0.3')
+                .from('.hero h1', { duration: 0.7, y: 40, opacity: 0 }, '-=0.2')
+                .from('.hero-cta', { duration: 0.6, y: 20, opacity: 0 }, '-=0.3')
+                .from('.hero-coords', { duration: 0.6, opacity: 0, stagger: 0.08 }, '-=0.4');
+
+            typeLoop();
+        }
+
+        const typedEl = document.getElementById('typed-text');
+        let phraseIdx = 0;
+
+        function typeLoop() {
+            const phrase = typedPhrases[phraseIdx];
+            let charIdx = 0;
+
+            function typeChar() {
+                if (charIdx <= phrase.length) {
+                    typedEl.textContent = phrase.slice(0, charIdx);
+                    charIdx++;
+                    setTimeout(typeChar, 38);
+                } else {
+                    setTimeout(eraseChar, 2200);
+                }
+            }
+
+            function eraseChar() {
+                if (charIdx >= 0) {
+                    typedEl.textContent = phrase.slice(0, charIdx);
+                    charIdx--;
+                    setTimeout(eraseChar, 16);
+                } else {
+                    phraseIdx = (phraseIdx + 1) % typedPhrases.length;
+                    setTimeout(typeLoop, 300);
+                }
+            }
+
+            typeChar();
+        }
+
+        /* ═══════ CUSTOM CURSOR ═══════ */
+        const dot = document.querySelector('.cursor-dot');
+        const ring = document.querySelector('.cursor-ring');
+        let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            dot.style.left = mouseX + 'px';
+            dot.style.top = mouseY + 'px';
+        });
+
+        function animateRing() {
+            ringX += (mouseX - ringX) * 0.16;
+            ringY += (mouseY - ringY) * 0.16;
+            ring.style.left = ringX + 'px';
+            ring.style.top = ringY + 'px';
+            requestAnimationFrame(animateRing);
+        }
+        animateRing();
+
+        document.querySelectorAll('a, button, .product-card, .principle').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        });
+
+        /* ═══════ NAV SCROLL STATE ═══════ */
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 60);
+            document.getElementById('back-top').classList.toggle('visible', window.scrollY > 600);
+        });
+
+        document.getElementById('back-top').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        /* ═══════ REVEAL ANIMATIONS ═══════ */
+        gsap.utils.toArray('.reveal').forEach(el => {
+            gsap.to(el, {
+                scrollTrigger: { trigger: el, start: 'top 82%' },
+                duration: 0.9,
+                opacity: 1,
+                y: 0,
+                ease: 'power3.out'
+            });
+        });
+
+        gsap.utils.toArray('.product-card').forEach((card, i) => {
+            gsap.to(card, {
+                scrollTrigger: { trigger: card, start: 'top 88%' },
+                duration: 0.7,
+                opacity: 1,
+                y: 0,
+                delay: (i % 3) * 0.1,
+                ease: 'power3.out'
+            });
+        });
+
+        /* ═══════ ANIMATED COUNTERS ═══════ */
+        document.querySelectorAll('.stat-number').forEach(el => {
+            const target = parseInt(el.dataset.count, 10);
+            const suffix = el.dataset.suffix || '';
+
+            ScrollTrigger.create({
+                trigger: el,
+                start: 'top 85%',
+                once: true,
+                onEnter: () => {
+                    const obj = { val: 0 };
+                    gsap.to(obj, {
+                        val: target,
+                        duration: 1.8,
+                        ease: 'power2.out',
+                        onUpdate: () => {
+                            const v = Math.floor(obj.val);
+                            el.textContent = (v >= 1000 ? v.toLocaleString('en-US') : v) + suffix;
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
