@@ -44,12 +44,10 @@
             color: var(--black);
         }
 
-        /* ═══════ SCROLLBAR ═══════ */
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: var(--black); border-left: 1px solid var(--gray-3); }
         ::-webkit-scrollbar-thumb { background: var(--white); }
 
-        /* ═══════ CRT SCANLINES + VIGNETTE ═══════ */
         .crt-overlay {
             position: fixed;
             inset: 0;
@@ -72,7 +70,6 @@
             background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.5) 100%);
         }
 
-        /* ═══════ BOOT LOADER ═══════ */
         #boot-loader {
             position: fixed;
             inset: 0;
@@ -101,7 +98,6 @@
             width: 70px;
         }
 
-        /* ═══════ CUSTOM CURSOR ═══════ */
         .cursor-dot {
             position: fixed;
             width: 8px;
@@ -136,7 +132,6 @@
             body { cursor: auto; }
         }
 
-        /* ═══════ NAVIGATION ═══════ */
         nav {
             position: fixed;
             top: 0;
@@ -212,7 +207,6 @@
             opacity: 1;
         }
 
-        /* ═══════ BUTTONS ═══════ */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -256,7 +250,6 @@
         .btn-solid::before { background: var(--black); }
         .btn-solid:hover { color: var(--white) !important; }
 
-        /* ═══════ HERO ═══════ */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -330,7 +323,6 @@
             z-index: 2;
         }
 
-        /* GLITCH EFFECT */
         .glitch {
             position: relative;
             display: inline-block;
@@ -410,7 +402,6 @@
         .coord-bl { bottom: 40px; left: 40px; }
         .coord-br { bottom: 40px; right: 40px; text-align: right; }
 
-        /* ═══════ MARQUEE TICKER ═══════ */
         .marquee {
             border-top: 1px solid var(--white);
             border-bottom: 1px solid var(--white);
@@ -451,7 +442,6 @@
             to { transform: translateX(-50%); }
         }
 
-        /* ═══════ SECTIONS ═══════ */
         section {
             padding: 120px 40px;
             position: relative;
@@ -492,7 +482,6 @@
             margin-bottom: 70px;
         }
 
-        /* ═══════ ABOUT / TERMINAL ═══════ */
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -586,7 +575,6 @@
 
         .p-desc { color: var(--gray-5); font-size: 0.82rem; }
 
-        /* ═══════ PRODUCTS ═══════ */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -604,7 +592,6 @@
             overflow: hidden;
         }
 
-        /* pixel corner brackets */
         .product-card::before,
         .product-card::after {
             content: '';
@@ -722,7 +709,6 @@
 
         .product-link:hover { letter-spacing: 3px; }
 
-        /* ═══════ STATS ═══════ */
         .stats-section {
             border-top: 1px solid var(--white);
             border-bottom: 1px solid var(--white);
@@ -762,7 +748,6 @@
             color: var(--gray-5);
         }
 
-        /* ═══════ ROADMAP ═══════ */
         .roadmap { display: grid; gap: 0; border-left: 1px solid var(--gray-3); }
 
         .road-item {
@@ -806,7 +791,6 @@
 
         .road-content p { font-size: 0.87rem; color: var(--gray-5); max-width: 560px; }
 
-        /* ═══════ CTA ═══════ */
         .cta-section { padding: 140px 40px; }
 
         .cta-box {
@@ -856,7 +840,6 @@
 
         .cta-buttons { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
 
-        /* ═══════ FOOTER ═══════ */
         footer {
             border-top: 1px solid var(--white);
             padding: 80px 40px 0;
@@ -923,7 +906,6 @@
 
         .footer-sys { display: flex; align-items: center; gap: 10px; }
 
-        /* ═══════ BACK TO TOP ═══════ */
         #back-top {
             position: fixed;
             bottom: 30px;
@@ -947,10 +929,8 @@
         #back-top.visible { opacity: 1; pointer-events: auto; }
         #back-top:hover { background: var(--white); color: var(--black); }
 
-        /* ═══════ REVEAL ANIM ═══════ */
         .reveal { opacity: 0; transform: translateY(40px); }
 
-        /* ═══════ RESPONSIVE ═══════ */
         @media (max-width: 1024px) {
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .stat:nth-child(2) { border-right: none; }
@@ -979,15 +959,12 @@
 </head>
 <body>
 
-    <!-- CRT EFFECTS -->
     <div class="crt-overlay"></div>
     <div class="vignette"></div>
 
-    <!-- CUSTOM CURSOR -->
     <div class="cursor-dot"></div>
     <div class="cursor-ring"></div>
 
-    <!-- ═══════ BOOT LOADER ═══════ -->
     <div id="boot-loader">
         <svg id="boot-logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
             <rect x="128" y="108" width="284" height="340" fill="#FFFFFF"/>
@@ -1003,7 +980,6 @@
         <div class="boot-line" style="margin-top:14px;"><span class="ok">SYSTEM READY. WELCOME TO DRONOVA TECH.</span></div>
     </div>
 
-    <!-- ═══════ NAVIGATION ═══════ -->
     <nav id="navbar">
         <a href="#" class="nav-brand">
             <svg class="nav-logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
@@ -1022,7 +998,6 @@
         </div>
     </nav>
 
-    <!-- ═══════ HERO ═══════ -->
     <section class="hero">
         <div class="hero-grid-bg"></div>
 
@@ -1052,7 +1027,6 @@
         </div>
     </section>
 
-    <!-- ═══════ MARQUEE ═══════ -->
     <div class="marquee">
         <div class="marquee-track">
             <span class="marquee-item">PRECISION ENGINEERING</span>
@@ -1068,7 +1042,6 @@
         </div>
     </div>
 
-    <!-- ═══════ ABOUT ═══════ -->
     <section id="about">
         <div class="section-inner">
             <div class="section-label">01 // Who We Are</div>
@@ -1126,7 +1099,6 @@
         </div>
     </section>
 
-    <!-- ═══════ PRODUCTS ═══════ -->
     <section id="products" style="border-top: 1px solid var(--gray-3);">
         <div class="section-inner">
             <div class="section-label">02 // The Lineup</div>
@@ -1156,15 +1128,15 @@
                         <span class="product-index">PRD_002</span>
                         <span class="product-status">In Dev</span>
                     </div>
-                    <div class="product-icon">🧠</div>
-                    <h3>NeuralSpace</h3>
-                    <p>Cognitive training that adapts to you. Track focus, memory, and reasoning across sessions with clean on-device analytics.</p>
+                    <div class="product-icon">👻</div>
+                    <h3>Ghost Gallery</h3>
+                    <p>Clears out screenshots you no longer need. On-device duplicate and clutter detection, expired-code cleanup, and a searchable Museum for what's worth keeping — no internet permission, no ads, no analytics.</p>
                     <div class="product-foot">
                         <div class="product-tags">
-                            <span class="tag">training</span>
-                            <span class="tag">mobile</span>
+                            <span class="tag">android</span>
+                            <span class="tag">privacy</span>
                         </div>
-                        <a href="mailto:dronova.tech@gmail.com?subject=NeuralSpace%20Waitlist" class="product-link">Notify Me →</a>
+                        <a href="mailto:dronova.tech@gmail.com?subject=Ghost%20Gallery%20Waitlist" class="product-link">Notify Me →</a>
                     </div>
                 </div>
 
@@ -1173,73 +1145,38 @@
                         <span class="product-index">PRD_003</span>
                         <span class="product-status">In Dev</span>
                     </div>
-                    <div class="product-icon">⚙️</div>
-                    <h3>CodeForge</h3>
-                    <p>A developer toolkit for rapid prototyping. Snippets, scaffolds, and AI-assisted generation in a single portable workspace.</p>
+                    <div class="product-icon">🗓️</div>
+                    <h3>Daysuite</h3>
+                    <p>A planning and design suite in one place — calendar tools alongside a layered, Canva-style template editor for posters and graphics, protected behind a biometric lock.</p>
                     <div class="product-foot">
                         <div class="product-tags">
-                            <span class="tag">devtools</span>
-                            <span class="tag">desktop</span>
+                            <span class="tag">android</span>
+                            <span class="tag">productivity</span>
                         </div>
-                        <a href="mailto:dronova.tech@gmail.com?subject=CodeForge%20Waitlist" class="product-link">Notify Me →</a>
+                        <a href="mailto:dronova.tech@gmail.com?subject=Daysuite%20Waitlist" class="product-link">Notify Me →</a>
                     </div>
                 </div>
 
                 <div class="product-card reveal">
                     <div class="product-head">
                         <span class="product-index">PRD_004</span>
-                        <span class="product-status">Planned</span>
+                        <span class="product-status">In Dev</span>
                     </div>
-                    <div class="product-icon">🔄</div>
-                    <h3>DataSync</h3>
-                    <p>Encrypted synchronization for your files and settings across devices — end-to-end, zero-knowledge, fully yours.</p>
+                    <div class="product-icon">🎨</div>
+                    <h3>Color Bliss</h3>
+                    <p>Relaxing color-by-number for adults. Curated illustrated packs, clean fillable line art, zero clutter — no internet permission, nothing to sign in for.</p>
                     <div class="product-foot">
                         <div class="product-tags">
-                            <span class="tag">sync</span>
-                            <span class="tag">security</span>
+                            <span class="tag">android</span>
+                            <span class="tag">relaxation</span>
                         </div>
-                        <a href="mailto:dronova.tech@gmail.com?subject=DataSync%20Waitlist" class="product-link">Notify Me →</a>
-                    </div>
-                </div>
-
-                <div class="product-card reveal">
-                    <div class="product-head">
-                        <span class="product-index">PRD_005</span>
-                        <span class="product-status">Planned</span>
-                    </div>
-                    <div class="product-icon">📊</div>
-                    <h3>Apex Analytics</h3>
-                    <p>Personal analytics without surveillance. Visualize your habits, finances, and productivity — all computed locally.</p>
-                    <div class="product-foot">
-                        <div class="product-tags">
-                            <span class="tag">analytics</span>
-                            <span class="tag">local-first</span>
-                        </div>
-                        <a href="mailto:dronova.tech@gmail.com?subject=Apex%20Waitlist" class="product-link">Notify Me →</a>
-                    </div>
-                </div>
-
-                <div class="product-card reveal">
-                    <div class="product-head">
-                        <span class="product-index">PRD_006</span>
-                        <span class="product-status">Planned</span>
-                    </div>
-                    <div class="product-icon">🛡️</div>
-                    <h3>Guardian Suite</h3>
-                    <p>Personal security toolkit — permission auditing, tracker detection, and privacy hardening for everyday devices.</p>
-                    <div class="product-foot">
-                        <div class="product-tags">
-                            <span class="tag">security</span>
-                            <span class="tag">privacy</span>
-                        </div>
-                        <a href="mailto:dronova.tech@gmail.com?subject=Guardian%20Waitlist" class="product-link">Notify Me →</a>
+                        <a href="mailto:dronova.tech@gmail.com?subject=Color%20Bliss%20Waitlist" class="product-link">Notify Me →</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ═══════ STATS ═══════ -->
     <section class="stats-section">
         <div class="stats-grid">
             <div class="stat">
@@ -1247,7 +1184,7 @@
                 <span class="stat-label">Downloads</span>
             </div>
             <div class="stat">
-                <span class="stat-number" data-count="6">0</span>
+                <span class="stat-number" data-count="4">0</span>
                 <span class="stat-label">Products in Pipeline</span>
             </div>
             <div class="stat">
@@ -1261,7 +1198,6 @@
         </div>
     </section>
 
-    <!-- ═══════ ROADMAP ═══════ -->
     <section id="roadmap">
         <div class="section-inner">
             <div class="section-label">03 // Trajectory</div>
@@ -1286,22 +1222,21 @@
                 <div class="road-item">
                     <span class="road-year">2026 Q4</span>
                     <div class="road-content">
-                        <h4>NeuralSpace — Beta</h4>
-                        <p>Closed beta of the cognitive training platform opens to early supporters via waitlist.</p>
+                        <h4>Ghost Gallery — Launch</h4>
+                        <p>On-device screenshot cleanup ships to Google Play, closest to release of the three apps in active development.</p>
                     </div>
                 </div>
                 <div class="road-item">
                     <span class="road-year">2027</span>
                     <div class="road-content">
-                        <h4>Ecosystem Expansion</h4>
-                        <p>CodeForge, DataSync and the wider DT toolchain enter active development.</p>
+                        <h4>Daysuite &amp; Color Bliss — Launch</h4>
+                        <p>The planning-and-design suite and the color-by-number relaxation app round out the lineup.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ═══════ CTA ═══════ -->
     <section class="cta-section" style="border-top: 1px solid var(--gray-3);">
         <div class="cta-box reveal">
             <h2>Join the Network</h2>
@@ -1313,7 +1248,6 @@
         </div>
     </section>
 
-    <!-- ═══════ FOOTER ═══════ -->
     <footer>
         <div class="footer-inner">
             <div class="footer-top">
@@ -1330,9 +1264,9 @@
                 <div class="footer-col">
                     <h4>Products</h4>
                     <a href="https://play.google.com/store/apps/details?id=com.neuralslate.sudokumaster" target="_blank" rel="noopener">Sudoku Master</a>
-                    <a href="#products">NeuralSpace</a>
-                    <a href="#products">CodeForge</a>
-                    <a href="#products">DataSync</a>
+                    <a href="#products">Ghost Gallery</a>
+                    <a href="#products">Daysuite</a>
+                    <a href="#products">Color Bliss</a>
                     <a href="#products">Full Lineup</a>
                 </div>
 
@@ -1361,13 +1295,11 @@
         </div>
     </footer>
 
-    <!-- BACK TO TOP -->
     <button id="back-top" aria-label="Back to top">▲</button>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        /* ═══════ BOOT SEQUENCE ═══════ */
         const bootLines = document.querySelectorAll('.boot-line');
         const bootLoader = document.getElementById('boot-loader');
 
@@ -1390,7 +1322,6 @@
         });
         bootTL.to({}, { duration: 0.6 });
 
-        /* ═══════ HERO ENTRANCE + TYPING ═══════ */
         const typedPhrases = [
             'Building focused software under one mark.',
             'Privacy-first. Pixel-perfect. Uncompromising.',
@@ -1439,7 +1370,6 @@
             typeChar();
         }
 
-        /* ═══════ CUSTOM CURSOR ═══════ */
         const dot = document.querySelector('.cursor-dot');
         const ring = document.querySelector('.cursor-ring');
         let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
@@ -1465,7 +1395,6 @@
             el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
         });
 
-        /* ═══════ NAV SCROLL STATE ═══════ */
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             navbar.classList.toggle('scrolled', window.scrollY > 60);
@@ -1476,7 +1405,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        /* ═══════ REVEAL ANIMATIONS ═══════ */
         gsap.utils.toArray('.reveal').forEach(el => {
             gsap.to(el, {
                 scrollTrigger: { trigger: el, start: 'top 82%' },
@@ -1498,7 +1426,6 @@
             });
         });
 
-        /* ═══════ ANIMATED COUNTERS ═══════ */
         document.querySelectorAll('.stat-number').forEach(el => {
             const target = parseInt(el.dataset.count, 10);
             const suffix = el.dataset.suffix || '';
