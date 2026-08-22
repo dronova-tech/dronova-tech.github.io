@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    <title>Terms &amp; Conditions | Chess</title>
+    <style>
+        :root {
+            --ink: #0C0C0A;
+            --bg: #131311;
+            --surface: #1B1A17;
+            --surface-hi: #23221E;
+            --surface-top: #2C2A25;
+            --accent: #67B84B;
+            --accent-bright: #86D468;
+            --accent-dim: #3A6B2F;
+            --on-accent: #0B1407;
+            --gold: #D9A441;
+            --danger: #C9584A;
+            --text: #F1EDE4;
+            --text-muted: #A8A296;
+            --text-faint: #767066;
+            --outline: #33312A;
+            --outline-soft: #24231E;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .header {
+            padding: 72px 20px 44px;
+            text-align: center;
+            background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+            border-bottom: 1px solid var(--outline);
+        }
+
+        .header .mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: var(--surface-hi);
+            border: 1px solid var(--outline);
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.3rem;
+            font-weight: 700;
+            letter-spacing: -0.6px;
+            line-height: 1.15;
+            color: var(--text);
+        }
+
+        .header .brand-sub {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            color: var(--text-faint);
+        }
+
+        .badge {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 7px 18px;
+            border-radius: 999px;
+            background: var(--accent-dim);
+            color: var(--accent-bright);
+            font-size: 0.74rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+        }
+
+        .container {
+            max-width: 820px;
+            margin: 0 auto 80px;
+            background: var(--surface);
+            padding: 48px;
+            border-radius: 22px;
+            border: 1px solid var(--outline);
+            margin-top: -32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .effective-date {
+            color: var(--text-faint);
+            font-size: 0.86rem;
+            margin-bottom: 40px;
+            text-align: center;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+        }
+
+        h2 {
+            color: var(--text);
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: -0.2px;
+            margin-top: 44px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            background: var(--accent);
+            margin-right: 12px;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        p, li {
+            color: var(--text);
+            opacity: 0.9;
+            font-size: 1rem;
+            margin-bottom: 1.05rem;
+        }
+
+        ul { padding-left: 22px; margin-bottom: 1.6rem; }
+        li { margin-bottom: 0.5rem; }
+
+        a { color: var(--accent-bright); text-decoration: none; border-bottom: 1px solid var(--accent-dim); }
+        a:hover { border-bottom-color: var(--accent-bright); }
+
+        .note {
+            background: var(--surface-hi);
+            border: 1px solid var(--outline-soft);
+            border-radius: 16px;
+            padding: 20px 22px;
+            margin: 20px 0 28px;
+            font-size: 0.94rem;
+        }
+
+        .note.warn { border-color: rgba(201, 88, 74, 0.4); }
+        .note strong { color: var(--gold); }
+
+        .contact-box {
+            background: var(--surface-hi);
+            padding: 34px;
+            border-radius: 18px;
+            margin-top: 50px;
+            border: 1px solid var(--outline-soft);
+            text-align: center;
+        }
+
+        .contact-box h2 { justify-content: center; margin-top: 0; }
+        .contact-box h2::before { display: none; }
+
+        .contact-box .email {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--accent-bright);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 52px 20px 64px;
+            color: var(--text-faint);
+            font-size: 0.86rem;
+        }
+
+        .footer a { font-weight: 600; }
+
+        @media (max-width: 640px) {
+            .container { margin: -24px 16px 60px; padding: 30px 22px; border-radius: 18px; }
+            .header h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="mark">♟</div>
+        <h1>CHESS</h1>
+        <span class="brand-sub">BY DRONOVA TECH</span>
+        <div class="badge">TERMS OF USE</div>
+    </div>
+
+    <div class="container">
+        <div class="effective-date">LAST UPDATED: AUGUST 22, 2026</div>
+
+        <p>Welcome to <strong>Chess</strong>. These Terms and Conditions govern your use of the Chess mobile application (package <code>com.dronovatech.chess</code>), developed by Dronova Tech.</p>
+
+        <h2>1. Agreement to Terms</h2>
+        <p>By installing or using Chess, you agree to be bound by these Terms. If you do not agree, please do not use the app.</p>
+
+        <h2>2. License</h2>
+        <p>Dronova Tech grants you a personal, non-exclusive, non-transferable license to use Chess on devices you own or control. The app's source code, chess engine, design and branding remain the exclusive property of Dronova Tech.</p>
+        <ul>
+            <li>You may not redistribute, resell, or reverse-engineer the app beyond what applicable law permits.</li>
+            <li>You may not use Dronova Tech's branding or assets outside the app itself.</li>
+        </ul>
+
+        <h2>3. What the App Offers</h2>
+        <p>Chess includes offline play against a range of computer opponents, puzzles, lessons, blindfold and coaching modes, game review with a what-if board, and two optional online modes: <strong>Friends</strong>, where you play a live game with someone you invite by a shareable code, and <strong>Play a Stranger</strong>, where the app pairs you with whoever else is searching at the same time. Bot difficulty and playing style, puzzle ratings, accuracy percentages, and similar figures are calculated on the app's own scale for its own features — they are not certified ratings and are not directly comparable to other chess platforms or rating systems (such as FIDE or online chess sites).</p>
+
+        <h2>4. Online Play (Friends &amp; Play a Stranger)</h2>
+        <div class="note">
+            Both modes connect two devices through Google Firebase to play a live game — Friends with someone you've shared a game code with, Play a Stranger with whoever the app matches you to. Neither has accounts, chat, or spectators; the only thing that passes between two devices in a game is chess moves.
+        </div>
+        <ul>
+            <li>Online games are untimed by design — the two devices agree only on the list of moves played, not a shared clock.</li>
+            <li>Play a Stranger pairs you with the next available searcher automatically; you do not choose or vet who you're matched with, and the search may time out and fall back to a computer opponent if nobody is found.</li>
+            <li>The service runs on Firebase's free tier and is offered as-is, with a technical ceiling on how many games can run at the same instant. It may be limited, delayed, or temporarily unavailable at Dronova Tech's discretion, and Dronova Tech does not guarantee uninterrupted availability of either online mode.</li>
+            <li>Each device independently verifies that a move is legal before accepting it. Dronova Tech does not monitor games for the use of chess engines or other external assistance; how you and your opponent choose to play is between the two of you.</li>
+            <li>Be respectful toward the person you're playing, whether invited or matched. Do not use the display name field for harassment, impersonation, or anything unlawful.</li>
+        </ul>
+
+        <h2>5. Local Data Is Your Responsibility</h2>
+        <p>Your archived games, settings, and training progress are stored only on your device (see our <a href="privacy-policy.html">Privacy Policy</a>). We hold no copy of this data and cannot recover it if your device is lost, damaged, factory-reset, or if you clear the app's storage. Please keep your own backups of anything you'd be upset to lose, independent of this app.</p>
+
+        <h2>6. No Warranty</h2>
+        <p>Chess is provided "as is," without warranties of any kind, express or implied. We do not guarantee the app, its bots, its analysis, or its online modes will be error-free, uninterrupted, or free of bugs.</p>
+
+        <h2>7. Limitation of Liability</h2>
+        <p>To the maximum extent permitted by law, Dronova Tech is not liable for any indirect, incidental, or consequential damages arising from your use of, or inability to use, Chess — including, without limitation, loss of locally stored game data, or interruption of an online game.</p>
+
+        <h2>8. Changes to These Terms</h2>
+        <p>We may update these Terms from time to time. Continued use of the app after an update means you accept the revised Terms.</p>
+
+        <h2>9. Governing Law</h2>
+        <p>These Terms are governed by the laws of the developer's operating jurisdiction, without regard to conflict-of-law principles.</p>
+
+        <div class="contact-box">
+            <h2>10. Contact</h2>
+            <p>Questions about these Terms:</p>
+            <p class="email"><a href="mailto:dronova.tech@gmail.com">dronova.tech@gmail.com</a></p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2026 Dronova Tech. All rights reserved. | <a href="privacy-policy.html">Privacy Policy</a></p>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    <title>Privacy Policy | Chess</title>
+    <style>
+        :root {
+            --ink: #0C0C0A;
+            --bg: #131311;
+            --surface: #1B1A17;
+            --surface-hi: #23221E;
+            --surface-top: #2C2A25;
+            --accent: #67B84B;
+            --accent-bright: #86D468;
+            --accent-dim: #3A6B2F;
+            --on-accent: #0B1407;
+            --gold: #D9A441;
+            --info: #5F97C6;
+            --danger: #C9584A;
+            --text: #F1EDE4;
+            --text-muted: #A8A296;
+            --text-faint: #767066;
+            --cream: #EDE7D3;
+            --outline: #33312A;
+            --outline-soft: #24231E;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .header {
+            padding: 72px 20px 44px;
+            text-align: center;
+            background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+            border-bottom: 1px solid var(--outline);
+        }
+
+        .header .mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: var(--surface-hi);
+            border: 1px solid var(--outline);
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.3rem;
+            font-weight: 700;
+            letter-spacing: -0.6px;
+            line-height: 1.15;
+            color: var(--text);
+        }
+
+        .header .brand-sub {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            color: var(--text-faint);
+        }
+
+        .badge {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 7px 18px;
+            border-radius: 999px;
+            background: var(--accent-dim);
+            color: var(--accent-bright);
+            font-size: 0.74rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+        }
+
+        .container {
+            max-width: 820px;
+            margin: 0 auto 80px;
+            background: var(--surface);
+            padding: 48px;
+            border-radius: 22px;
+            border: 1px solid var(--outline);
+            margin-top: -32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .effective-date {
+            color: var(--text-faint);
+            font-size: 0.86rem;
+            margin-bottom: 40px;
+            text-align: center;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+        }
+
+        .lede {
+            background: var(--surface-hi);
+            border: 1px solid var(--outline-soft);
+            border-radius: 16px;
+            padding: 22px 24px;
+            margin-bottom: 40px;
+            font-size: 1rem;
+        }
+
+        .lede strong { color: var(--accent-bright); }
+
+        h2 {
+            color: var(--text);
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: -0.2px;
+            margin-top: 44px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            background: var(--accent);
+            margin-right: 12px;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        h3 {
+            color: var(--text);
+            font-size: 1rem;
+            font-weight: 700;
+            margin-top: 26px;
+            margin-bottom: 10px;
+        }
+
+        p, li {
+            color: var(--text);
+            opacity: 0.9;
+            font-size: 1rem;
+            margin-bottom: 1.05rem;
+        }
+
+        ul { padding-left: 22px; margin-bottom: 1.6rem; }
+        li { margin-bottom: 0.6rem; }
+
+        a { color: var(--accent-bright); text-decoration: none; border-bottom: 1px solid var(--accent-dim); }
+        a:hover { border-bottom-color: var(--accent-bright); }
+
+        .split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 22px 0 28px;
+        }
+
+        .split-card {
+            background: var(--surface-hi);
+            border: 1px solid var(--outline-soft);
+            border-radius: 16px;
+            padding: 20px 22px;
+        }
+
+        .split-card.on { border-color: var(--accent-dim); }
+        .split-card.off { border-color: var(--outline); }
+
+        .split-card h4 {
+            margin: 0 0 10px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .split-card.on h4 { color: var(--accent-bright); }
+        .split-card.off h4 { color: var(--text-faint); }
+
+        .split-card ul { margin: 0; padding-left: 18px; }
+        .split-card li { font-size: 0.92rem; margin-bottom: 0.5rem; opacity: 0.85; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0 30px;
+            font-size: 0.92rem;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--outline-soft);
+            vertical-align: top;
+        }
+
+        th {
+            color: var(--text-faint);
+            font-weight: 700;
+            font-size: 0.74rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        td { color: var(--text); opacity: 0.9; }
+
+        .pill {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        .pill.green { background: var(--accent-dim); color: var(--accent-bright); }
+        .pill.gold { background: rgba(217, 164, 65, 0.18); color: var(--gold); }
+
+        .contact-box {
+            background: var(--surface-hi);
+            padding: 34px;
+            border-radius: 18px;
+            margin-top: 50px;
+            border: 1px solid var(--outline-soft);
+            text-align: center;
+        }
+
+        .contact-box h2 { justify-content: center; margin-top: 0; }
+        .contact-box h2::before { display: none; }
+
+        .contact-box .email {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--accent-bright);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 52px 20px 64px;
+            color: var(--text-faint);
+            font-size: 0.86rem;
+        }
+
+        .footer a { font-weight: 600; }
+
+        @media (max-width: 640px) {
+            .container { margin: -24px 16px 60px; padding: 30px 22px; border-radius: 18px; }
+            .header h1 { font-size: 1.8rem; }
+            .split { grid-template-columns: 1fr; }
+            table { display: block; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="mark">♟</div>
+        <h1>CHESS</h1>
+        <span class="brand-sub">BY DRONOVA TECH</span>
+        <div class="badge">PRIVACY POLICY</div>
+    </div>
+
+    <div class="container">
+        <div class="effective-date">LAST UPDATED: AUGUST 22, 2026</div>
+
+        <div class="lede">
+            <strong>Most of Chess needs nothing from you at all.</strong> The app was built with zero permissions, and every mode except one still works that way today: bots, puzzles, lessons, blindfold training, game review, the opening explorer and your archive all run entirely on your device. The one exception is <strong>online play</strong> — Friends (invite someone by code) and Play a Stranger (get matched with whoever's searching) — which is the only part of the app that ever touches the network, and this policy explains exactly what that involves.
+        </div>
+
+        <h2>1. Who We Are</h2>
+        <p>Chess is developed by Dronova Tech. This policy covers the Chess Android app (package <code>com.dronovatech.chess</code>) and applies to everyone who installs it.</p>
+
+        <h2>2. The Short Version</h2>
+        <div class="split">
+            <div class="split-card off">
+                <h4>Offline (default — everything but online play)</h4>
+                <ul>
+                    <li>No account, no sign-up, no login screen</li>
+                    <li>No data ever leaves your device</li>
+                    <li>No analytics, no ads, no crash reporting</li>
+                    <li>No location, contacts, camera, or microphone access</li>
+                </ul>
+            </div>
+            <div class="split-card on">
+                <h4>Online play (Friends &amp; Play a Stranger)</h4>
+                <ul>
+                    <li>An anonymous device ID, no email or phone required</li>
+                    <li>An optional display name you choose</li>
+                    <li>The moves of that one game, so your opponent's phone can see them</li>
+                    <li>Handled by Google Firebase, not our own servers</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>3. What We Collect When You Stay Offline</h2>
+        <p>If you only play against the bots, solve puzzles, take lessons, or review your games, Chess collects nothing and sends nothing anywhere — the app has no network permission active in that mode. Everything below stays only in the app's local storage on your device, and is removed automatically if you uninstall the app or clear its data:</p>
+        <ul>
+            <li><strong>Your finished games</strong> — archived move by move, used to power features like game review and the Echo-style bots that learn your own past habits.</li>
+            <li><strong>Your settings</strong> — your chosen player name, board theme, bot difficulty, and similar preferences.</li>
+            <li><strong>Your training progress</strong> — puzzle streaks, daily duel results, and the blind-spot data used to flag patterns you tend to miss.</li>
+        </ul>
+        <p>The app explicitly disables Android's automatic cloud backup for this data (<code>allowBackup="false"</code>) — nothing here is silently copied to a Google account backup, on purpose.</p>
+
+        <h2>4. What We Collect When You Play Online</h2>
+        <p>Chess has two ways to play a live game against another person: <strong>Friends</strong>, where you share a six-character code with someone you choose, and <strong>Play a Stranger</strong>, where the app pairs you with whoever else happens to be searching at the same moment. Turning on either one requires the <strong>only</strong> permissions this app ever asks for — <code>INTERNET</code> and <code>ACCESS_NETWORK_STATE</code> — and nothing else in the app uses them.</p>
+
+        <h3>4.1 Identity</h3>
+        <p>Both modes use Firebase Anonymous Authentication. The first time you go online, your device is assigned a random identifier. There is no email, password, phone number, or any other personal detail attached to it, and you never see a login screen.</p>
+
+        <h3>4.2 Display name</h3>
+        <p>You can set a name in Settings (it defaults to "Player" if left blank). Whenever you create, join, or get matched into a game, that name — up to 24 characters — is sent along and shown to the person you're playing against for that game only.</p>
+
+        <h3>4.3 What's stored per game</h3>
+        <table>
+            <tr><th>Field</th><th>What it is</th></tr>
+            <tr><td>Anonymous player IDs</td><td>Which two random device IDs are seated as White and Black</td></tr>
+            <tr><td>Display names</td><td>What each player chose to be shown, if anything</td></tr>
+            <tr><td>Moves</td><td>The list of moves played, in order — this is the entire game state; nothing else is derived or stored separately</td></tr>
+            <tr><td>Status &amp; result</td><td>Waiting / playing / over, and how the game ended</td></tr>
+            <tr><td>Timestamps</td><td>When the game was created, and a "last seen" marker per player so a dropped-out opponent can be detected</td></tr>
+        </table>
+        <p>That's the complete list for a game record. There is no chat, no voice, and no way to send anything through either mode other than a chess move.</p>
+
+        <h3>4.4 Play a Stranger — the matchmaking queue</h3>
+        <p>While Play a Stranger is searching for someone to pair you with, your anonymous ID, chosen display name, and a search timestamp sit briefly in a separate matchmaking queue so another searching phone can find and pair with you. That entry is removed automatically the instant you're matched, the moment you cancel the search, or immediately if your connection drops — it does not persist. The app's on-screen search status only ever shows you friendly text like "Looking for an opponent…"; it does not display other players' names or identifiers to you, even though pairing briefly involves reading queue entries in the background. If no match is found within the search window, Play a Stranger falls back to an offline computer opponent and nothing about that attempt is kept.</p>
+
+        <h2>5. What We Never Collect</h2>
+        <p>Regardless of which mode you use, Chess does not access or collect your location, contacts, photos or media, microphone, camera, advertising identifier, or any device analytics. There is no advertising SDK, no analytics SDK, and no crash-reporting SDK anywhere in the app. When the developer set up the Friends backend, Google Analytics was deliberately left off for the project — so there is nothing about your play collected for that purpose either.</p>
+
+        <h2>6. Third-Party Services</h2>
+        <p>Online play is built on <strong>Google Firebase</strong> — specifically Firebase Realtime Database and Firebase Authentication — running on Firebase's free Spark plan. Firebase is the only third party any part of this app talks to. Google's handling of data passing through Firebase is described in <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase's own privacy documentation</a>.</p>
+
+        <h2>7. Data Retention</h2>
+        <p>Local data (your archive, settings, and training progress) stays on your device until you clear the app's storage or uninstall it — we have no copy of it and cannot restore it for you.</p>
+        <p>Online game records in Firebase are not automatically deleted once a game ends; they are small (well under a kilobyte each) and are removed only through manual housekeeping on the developer's side. If you'd like a specific game record removed, contact us using the details below.</p>
+
+        <h2>8. Security</h2>
+        <p>Every online game — whether started through Friends or Play a Stranger — is protected by server-side rules that require authentication for every action, prevent anyone from reading a game they're not seated in, stop a seat from being taken over once claimed, and make the move history append-only so past moves can never be rewritten. Both phones in a game independently check every incoming move against the chess engine before accepting it, so a tampered game cannot be forced onto an honest opponent's board.</p>
+        <p>These rules do not include a server-side chess referee — legality is checked on each device, not on Firebase's servers — because that would require paid infrastructure. In practice this only means a malicious client can waste its own time attempting an illegal move; it cannot make it stick on the other player's phone.</p>
+
+        <h2>9. Children's Privacy</h2>
+        <p>Chess is intended for a general audience and does not knowingly collect personal information from children. Because the app collects no personal information in its offline modes, and only an anonymous identifier and optional nickname in its online modes, there is nothing here that identifies a child regardless of age. If you believe a child has shared more information than intended through a display name, contact us and we will remove it.</p>
+
+        <h2>10. Your Choices</h2>
+        <ul>
+            <li>You can use Chess entirely offline, forever, simply by never opening Friends or Play a Stranger — nothing about the rest of the app depends on either.</li>
+            <li>You can leave the display name field blank; it will default to "Player."</li>
+            <li>You can clear the app's storage or uninstall it at any time to remove all locally saved data.</li>
+            <li>You can contact us to request removal of a specific online game record.</li>
+        </ul>
+
+        <h2>11. Changes to This Policy</h2>
+        <p>If this policy changes, we'll update the "Last updated" date at the top of this page. Continued use of the app after a change means you accept the revised policy.</p>
+
+        <div class="contact-box">
+            <h2>Contact</h2>
+            <p>Questions about this policy or your data:</p>
+            <p class="email"><a href="mailto:dronova.tech@gmail.com">dronova.tech@gmail.com</a></p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2026 Dronova Tech. All rights reserved. | <a href="terms.html">Terms &amp; Conditions</a></p>
+    </div>
+
+</body>
+</html>
